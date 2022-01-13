@@ -1,6 +1,7 @@
 ### Todo
 
 - struct 类型选择
+- land init info
 - 合约地址固定
 - move 合约编写
 - move 编译上传
