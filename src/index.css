@@ -54,26 +54,39 @@ section {
   cursor: pointer;
 }
 .land:first-child {
-  border-top-left-radius: 1em;
+  border-top-left-radius: .5em;
 }
 .land:nth-child(4) {
-  border-top-right-radius: 1em;
+  border-top-right-radius: .5em;
 }
 .land:nth-child(5)  {
-  border-bottom-left-radius: 1em;
+  border-bottom-left-radius: .5em;
 }
 .land:nth-child(8) {
-  border-bottom-right-radius: 1em;
+  border-bottom-right-radius: .5em;
 }
 .land_info {
+  position: relative;
   display: flex;
   flex-flow: column;
-  padding: .6em .8em;
+  padding: .2em .6em;
   word-break: break-all;
   color: var(--note-bk);
+  height: 100%;
+  box-sizing: border-box;
+}
+.land_bottominfo {
+  position: absolute;
+  bottom: .2em;
+  left: 0;
+  display: inline-flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 .5em;
+  box-sizing: border-box;
   opacity: 0;
 }
-.land:hover .land_info, .land:hover .land_check, .land--checked .land_info, .land--checked .land_check {
+.land:hover .land_bottominfo, .land:hover .land_check, .land--checked .land_bottominfo, .land--checked .land_check {
   opacity: 1;
 }
 .land--checked {
@@ -89,6 +102,9 @@ section {
   display: inline-block;
   opacity: 0;
   cursor: pointer;
+}
+.land_owner {
+  width: 80%;
 }
 
 .land8_account {

@@ -25,8 +25,11 @@
           @click="landChoose(idx)">
           <input type="checkbox" class="land_check" :value="idx" v-model="landchecks" />
           <ul class="land_info">
-            <li><span>owner: </span><span>{{ land.owner }}</span></li>
-            <li><span>price: </span><span>{{ land.price }}</span></li>
+            <li class="land_message">{{ land.message }}</li>
+            <li class="land_bottominfo">
+              <span class="land_owner" title="land owner">{{ land.owner || 'None' }}</span>
+              <span class="land_price" title="land price">{{ land.price || 1000 }}</span>
+            </li>
           </ul>
         </li> 
       </ul>
@@ -34,8 +37,8 @@
     <section class="land_tip"></section>
     <section class="land_perate lflex lflex--wrap">
       <button class="land_button">荒地开垦</button>
-      <button class="land_button">设置价格</button>
-      <button class="land_button">设置背景</button>
+      <button class="land_button" v-show="isOwner">设置价格</button>
+      <button class="land_button" v-show="isOwner">设置背景</button>
       <select class="land_select" v-model="testtype">
         <option>code</option>
         <option>block</option>

@@ -9,9 +9,9 @@ new Vue({
       {
         owner: '0xf7ea75c717892e5dfce5844ce4271dd6',
         price: 0,
-        detable: true,
+        message: 'hello land8',
         bkcolor: '#223567'
-      }, {}, {}, {}, {}, {}, {}, {}
+      }, { owner: '0x125ffbe331db6fbf49ee0e62f22321a3' }, {}, {}, {}, {}, {}, {}
     ],
     accounts: [],
     nodeUrlMap: {
@@ -24,6 +24,20 @@ new Vue({
     landchecks: [],
     testtype: 'balances',
     testinput: 0,
+  },
+  computed: {
+    isOwner(){
+      if (this.landchecks.length && this.accounts.length) {
+        let taccount = this.accounts[0]
+        for (let idx of this.landchecks) {
+          if (this.land8[idx].owner !== taccount) {
+            return false
+          }
+        }
+        return true
+      }
+      return false
+    }
   },
   mounted(){
     this.eInit()
@@ -108,13 +122,6 @@ new Vue({
       } catch (err) {
         console.error(err)
       }
-    },
-    isOwner(landowner) {
-      if (!this.accounts[0]) {
-        console.error('connect account first')
-        return false
-      }
-      return this.accounts[0] === landowner
     },
     landChoose(idx) {
       let cidx = this.landchecks.indexOf(idx)
