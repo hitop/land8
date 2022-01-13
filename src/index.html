@@ -1,0 +1,54 @@
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Land8 - little land trade game</title>
+  <link rel="icon" type="image/svg" href="land8.svg" />
+  <link rel="stylesheet" href="index.css" type="text/css" />
+</head>
+
+<body>
+  <main class="land8">
+    <h2 class="land8_title">Land 8</h2>
+    <section class="land8_account lflex">
+      <div class="land8_accountinfo">
+        <label>当前账号</label>
+        <span>{{ accounts[0] || '尚未连接' }}</span>
+      </div>
+      <button class="land_button h40 greenbk" v-show="!accounts[0]" id="onboardButton"></button>
+    </section>
+    <section class="land8_content">
+      <ul class="land8_container">
+        <li class="land" v-for="(land, idx) in land8"
+          :style="{ background: land.bkcolor }"
+          :class="{ 'land--checked': landchecks.indexOf(idx) !== -1 }"
+          @click="landChoose(idx)">
+          <input type="checkbox" class="land_check" :value="idx" v-model="landchecks" />
+          <ul class="land_info">
+            <li><span>owner: </span><span>{{ land.owner }}</span></li>
+            <li><span>price: </span><span>{{ land.price }}</span></li>
+          </ul>
+        </li> 
+      </ul>
+    </section>
+    <section class="land_tip"></section>
+    <section class="land_perate lflex lflex--wrap">
+      <button class="land_button">荒地开垦</button>
+      <button class="land_button">设置价格</button>
+      <button class="land_button">设置背景</button>
+      <select class="land_select" v-model="testtype">
+        <option>code</option>
+        <option>block</option>
+        <option>balances</option>
+        <option>resources</option>
+        <option>transaction</option>
+      </select>
+      <input class="land_input" type="text" v-model="testinput">
+      <button class="land_button" @click="debugTest()">TEST</button>
+    </section>
+  </main>
+  
+  <script src="bundle.vue.js" defer></script>
+</body>
+
+</html>

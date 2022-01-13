@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   id="图层_1"
+   data-name="图层 1"
+   viewBox="0 0 512 512"
+   version="1.1"
+   sodipodi:docname="land8.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview18"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="1.1476675"
+     inkscape:cx="255.7361"
+     inkscape:cy="274.46975"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="图层_1" />
+  <defs
+     id="defs9">
+    <linearGradient
+       id="linearGradient29570"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#133cb9;stop-opacity:1;"
+         offset="0"
+         id="stop29568" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient15763">
+      <stop
+         style="stop-color:#133cb9;stop-opacity:1;"
+         offset="0"
+         id="stop15759" />
+      <stop
+         style="stop-color:#133cb9;stop-opacity:0;"
+         offset="1"
+         id="stop15761" />
+    </linearGradient>
+    <style
+       id="style2">.cls-1{fill:#fff;}.cls-2{fill:url(#未命名的渐变_2);}</style>
+    <linearGradient
+       id="未命名的渐变_2"
+       x1="464.42023"
+       y1="534.92462"
+       x2="-49.665947"
+       y2="267.42554"
+       gradientTransform="matrix(1,0,0,-1,9.584658,562.80729)"
+       gradientUnits="userSpaceOnUse"
+       xlink:href="#linearGradient15763">
+      <stop
+         offset="0"
+         stop-color="#2357eb"
+         id="stop4" />
+      <stop
+         offset="1"
+         stop-color="#011e80"
+         id="stop6" />
+    </linearGradient>
+  </defs>
+  <title
+     id="title11">coin-1</title>
+  <circle
+     class="cls-1"
+     cx="587"
+     cy="758"
+     r="250"
+     id="circle13" />
+  <path
+     class="cls-2"
+     d="M 73.001344,20.554153 C 11.161531,26.970642 36.892706,466.51586 204.88854,477.38259 309.93367,482.99533 668.54985,505.90157 415.35438,429.35195 -44.766041,404.10278 156.70244,-5.5917209 73.001344,20.554153 Z"
+     id="path15"
+     style="fill:#133cb9;fill-opacity:1"
+     sodipodi:nodetypes="cccc" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:369.135px;line-height:1.25;font-family:sans-serif;fill:#133cb9;fill-opacity:1;stroke:none;stroke-width:9.22839"
+     x="249.41362"
+     y="315.65915"
+     id="text8018"
+     transform="scale(1.0511579,0.95133183)"><tspan
+       sodipodi:role="line"
+       id="tspan8016"
+       x="249.41362"
+       y="315.65915"
+       style="stroke-width:9.22839">8</tspan></text>
+  <metadata
+     id="metadata15708">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>coin-1</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>
