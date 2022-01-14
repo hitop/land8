@@ -123,6 +123,7 @@ section {
 }
 
 .land_button {
+  width: 100px;
   color: var(--main-fc);
   background: var(--wave-bk);
   cursor: pointer;
