@@ -1,0 +1,7 @@
+[package]
+name = "Land8"
+version = "0.0.1"
+authors = ["Kuang Finn"]
+
+[addresses]
+MyAddress = "0x125ffbe331db6fbf49ee0e62f22321a3"
