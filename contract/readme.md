@@ -13,8 +13,9 @@ struct Land_Lists { lands: vector<Land> }
 struct LDT {}
 
 fun land_list_init();  // 生成 8 块土地
-
 fun mint();       // 获取 Token
+fun land_trade(account: &signer, landid: u8);      // 购买土地
+
 fun land_set_price(account: &signer, landid: u8, price: u4);  // 设置土地价格
 fun land_set_message(account: &signer, landid: u8, message: &str);  // 土地显示信息
 fun land_set_bkcolor(account: &signer, landid: u8, bkcolor: &str);  // 设置背景颜色

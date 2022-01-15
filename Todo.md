@@ -3,6 +3,7 @@
 - struct 类型选择
 - land init info
 - land trade
+- public script fun result
 - price auto rise
 - move 合约编写
 - move 编译上传
