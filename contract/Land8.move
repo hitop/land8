@@ -2,12 +2,13 @@ module 0x125ffbe331db6fbf49ee0e62f22321a3::Land8 {
   use 0x1::Signer;
   use 0x1::Token;
   use 0x1::Account;
+  use 0x1::Vector;
 
   const MY_ADDRESS: address = @0x125ffbe331db6fbf49ee0e62f22321a3;
   const LAND_AMOUNT: u8 = 8;
 
   // land trade token
-  struct LDT copy, drop, store {}
+  struct LDT has copy, drop, store {}
 
   struct Land has store {
     id: u8,
@@ -32,7 +33,7 @@ module 0x125ffbe331db6fbf49ee0e62f22321a3::Land8 {
 
   public(script) fun land_list_init(account: &signer) {
     // land8 create
-    assert!(Signer::address_of(account) == MY_ADDRESS, 0);
+    assert(Signer::address_of(account) == MY_ADDRESS, 0);
 
     let lands = Vector::empty<Land>();
     let id: u8 = 1;
@@ -54,15 +55,17 @@ module 0x125ffbe331db6fbf49ee0e62f22321a3::Land8 {
     Account::deposit_to_self<LDT>(account, token)
   }
 
-  public(script) fun land_trade(account: &signer, landid: u8) {
+  public(script) fun land_trade(account: &signer, landid: u64) acquires Land_Lists {
     let buyer: address = Signer::address_of(account);
     let land_list = borrow_global_mut<Land_Lists>(MY_ADDRESS);
     let land  = Vector::borrow(&mut land_list.lands, landid);
 
     let Land { id: _, owner, price, message: _, bkcolor: _ } = land;
     let buyldt: Token<LDT> = Account::withdraw<LDT>(account, (price as u128));
-    Account::deposit_to_self<LDT>(owner, buyldt);   // 转账
-    land.owner: address = buyer;        // owner 转让/覆盖
-    land.price: u64 = land.price * 2;   // 价格上涨（算法待优化
+    Account::deposit_to_self<LDT>(owner, buyldt);
+
+    // 土地所有权转让及价格修改（编译失败，待修改
+    land.owner: address = buyer;
+    land.price: u64 = land.price * 2;
   }
 }
