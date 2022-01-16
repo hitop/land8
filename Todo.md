@@ -13,6 +13,7 @@
 
 编译测试
 
+- token mint limit account
 - Coin public(script)
 - Ldttest
   - INVALID_MAIN_FUNCTION_SIGNATURE

@@ -16,7 +16,8 @@ yarn
 yarn start
 ```
 
-然后浏览器打开 http://localhost:9022
+- 检查 Starmask 插件是否安装
+- 然后浏览器打开 http://localhost:9022
 
 ## Contract deployment/智能合约部署
 

@@ -157,23 +157,44 @@ new Vue({
 
       switch(this.testtype) {
       case 'code':
-        this.testresult = await this.provider.getCode(this.testinput)
-        console.log(this.testinput, 'code', this.testresult)
+        this.provider.getCode(this.testinput).catch(e=>{
+          this.testresult = e.message || e
+        }).then(res=>{
+          this.testresult = res
+          console.log(this.testinput, 'code', this.testresult)
+        })
         break
       case 'block':
-        this.testresult = await this.provider.getBlock(Number(this.testinput))
-        console.log(this.testinput, 'block info', this.testresult)
+        this.provider.getBlock(Number(this.testinput)).catch(e=>{
+          this.testresult = e.message || e
+        }).then(res=>{
+          this.testresult = res
+          console.log(this.testinput, 'block info', this.testresult)
+        })
         break
       case 'balances':
-        this.testresult = await this.provider.getBalances(this.testinput || this.accounts[0])
-        console.log(this.testresult)
+        this.provider.getBalances(this.testinput || this.accounts[0]).catch(e=>{
+          this.testresult = e.message || e
+        }).then(res=>{
+          this.testresult = res
+          console.log(this.testresult)
+        })
         break
       case 'resources':
-        this.testresult = await this.provider.getResources(this.testinput || this.accounts[0])
-        console.log(this.testresult)
+        this.provider.getResources(this.testinput || this.accounts[0]).catch(e=>{
+          this.testresult = e.message || e
+        }).then(res=>{
+          this.testresult = res
+          console.log(this.testresult)
+        })
         break
       case 'transaction':
-        this.testresult = await this.provider.getTransaction(this.testinput)
+        this.provider.getTransaction(this.testinput).catch(e=>{
+          this.testresult = e.message || e
+        }).then(res=>{
+          this.testresult = res
+          console.log(this.testresult)
+        })
         console.log(this.testinput, 'transaction info', this.testresult)
         break
       }

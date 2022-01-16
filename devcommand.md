@@ -73,4 +73,23 @@ fetch('http://localhost:9850', {
     "params":["0x1::TransferScripts::peer_to_peer_v2"]
   })
 }).then(res=>res.text()).then(s=>console.log(s))
+
+{
+ "id":200, 
+ "jsonrpc":"2.0", 
+ "method":"contract.dry_run", 
+ "params":[
+    {
+      "chain_id": 254,
+      "gas_unit_price": 1,
+      "sender": "0x125ffbe331db6fbf49ee0e62f22321a3",
+      "sender_public_key": "0xc61eeb76eef6fa27b959dd924d3c0e093a88277bc9b1c5122c0bac49ec9c5adc",
+      "max_gas_amount": 40000000,
+      "script": {
+        "code": "0x125ffbe331db6fbf49ee0e62f22321a3::MyToken::mint", 
+        "args": ["10000000u128"]
+      }
+    }
+  ]
+}
 ```
