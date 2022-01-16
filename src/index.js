@@ -2,7 +2,7 @@ import StarMaskOnboarding from '@starcoin/starmask-onboarding'
 import { providers, utils, bcs, encoding, version as starcoinVersion } from '@starcoin/starcoin'
 import Vue from './vue.min.js'
 
-import { sJson } from './string'
+import { sJson, sString } from './string'
 
 new Vue({
   el: ".land8",
@@ -24,8 +24,9 @@ new Vue({
       '254': 'http://localhost:9850',
     },
     landchecks: [],
-    testtype: 'balances',
+    testtype: 'block',
     testinput: 0,
+    testresult: '',
     currentnode: '254',
     drybody: `{
   "id":101, 
@@ -46,7 +47,13 @@ new Vue({
         return true
       }
       return false
-    }
+    },
+    testresultshow(){
+      if (typeof this.testresult === 'object') {
+        return JSON.stringify(this.testresult, null, 2)
+      }
+      return sString(this.testresult)
+    },
   },
   mounted(){
     this.eInit()
@@ -150,24 +157,24 @@ new Vue({
 
       switch(this.testtype) {
       case 'code':
-        const code = await this.provider.getCode(this.testinput)
-        console.log(this.testinput, 'code', code)
+        this.testresult = await this.provider.getCode(this.testinput)
+        console.log(this.testinput, 'code', this.testresult)
         break
       case 'block':
-        const block = await this.provider.getBlock(Number(this.testinput))
-        console.log(this.testinput, 'block info', block)
+        this.testresult = await this.provider.getBlock(Number(this.testinput))
+        console.log(this.testinput, 'block info', this.testresult)
         break
       case 'balances':
-        const balances = await this.provider.getBalances(this.testinput || this.accounts[0])
-        console.log(balances)
+        this.testresult = await this.provider.getBalances(this.testinput || this.accounts[0])
+        console.log(this.testresult)
         break
       case 'resources':
-        const resource = await this.provider.getResources(this.testinput || this.accounts[0])
-        console.log(resource)
+        this.testresult = await this.provider.getResources(this.testinput || this.accounts[0])
+        console.log(this.testresult)
         break
       case 'transaction':
-        const txn = await this.provider.getTransaction(this.testinput)
-        console.log(this.testinput, 'transaction info', txn)
+        this.testresult = await this.provider.getTransaction(this.testinput)
+        console.log(this.testinput, 'transaction info', this.testresult)
         break
       }
     },
@@ -178,8 +185,12 @@ new Vue({
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(sJson(this.drybody)),
-      }).then(res=>res.text()).then(s=>console.log(s)).catch(e=>{
-        console.error(e.message)
+      }).then(res=>res.json()).catch(e=>{
+        console.error(e)
+        return { error: e.message }
+      }).then(res=>{
+        console.log(res)
+        this.testresult = res
       })
     },
   }

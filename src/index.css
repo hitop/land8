@@ -163,7 +163,7 @@ section {
   border-radius: .5em;
 }
 
-.land_fetch {
+.test_fetch {
   flex-direction: column;
   margin-top: 1.5em;
 }
@@ -177,6 +177,16 @@ section {
 }
 .test_fetchnode {
   flex-direction: column;
+}
+.test_result {
+  border: 1px solid;
+  margin-top: 1em;
+  font-size: 1.2em;
+  padding: .5em;
+  border-radius: .4em;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-all;
 }
 
 .h40 {

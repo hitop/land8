@@ -51,7 +51,7 @@
       </select>
       <input class="land_input" type="text" v-model="testinput">
       <button class="land_button" @click="debugTest()">TEST</button>
-      <div class="lflex land_fetch">
+      <div class="lflex test_fetch">
         <textarea class="land_textarea" placeholder="fetch json body test" v-model="drybody"></textarea>
         <div class="lflex">
           <select class="land_select" v-model="currentnode">
@@ -60,6 +60,7 @@
           <button class="land_button" @click="dryRun()">DRY.RUN</button>
         </div>
       </div>
+      <div class="test_result" v-show="testresult">{{ testresultshow }}</div>
     </section>
   </main>
   
