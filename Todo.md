@@ -10,16 +10,20 @@
 
 前端部分
 
-- params 输入框 数量及placeholder变化
+- test 显示返回结果
+- 取消多项选择（保留，只提醒
 - 获取 land 初始化信息
 - 显示当前账户拥有的land
 - 显示当前前端对应 链(dev)
 
 编译测试
 
+- Coin public(script)
+- Ldttest
 
 ### Done
 
+- params 输入框数量及placeholder变化（取消
 - coin.move 账号下还是全局
 - 合约地址固定
 - 选择土地后显示可操作按钮

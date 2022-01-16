@@ -36,9 +36,12 @@
     </section>
     <section class="land_tip"></section>
     <section class="land_perate lflex lflex--wrap">
-      <button class="land_button">荒地开垦</button>
+      <button class="land_button" v-show="!isOwner && landchecks.length">BUY IT</button>
       <button class="land_button" v-show="isOwner">设置价格</button>
+      <button class="land_button" v-show="isOwner">设置信息</button>
       <button class="land_button" v-show="isOwner">设置背景</button>
+    </section>
+    <section class="move_test">
       <select class="land_select" v-model="testtype">
         <option>code</option>
         <option>block</option>
@@ -48,6 +51,15 @@
       </select>
       <input class="land_input" type="text" v-model="testinput">
       <button class="land_button" @click="debugTest()">TEST</button>
+      <div class="lflex land_fetch">
+        <textarea class="land_textarea" placeholder="fetch json body test" v-model="drybody"></textarea>
+        <div class="lflex">
+          <select class="land_select" v-model="currentnode">
+            <option v-for="(idx, node) in nodeUrlMap" :value="node">{{ nodeUrlMap[node] }}</option>
+          </select>
+          <button class="land_button" @click="dryRun()">DRY.RUN</button>
+        </div>
+      </div>
     </section>
   </main>
   

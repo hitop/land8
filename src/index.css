@@ -27,6 +27,14 @@ ul, li {
 section {
   box-sizing: border-box;
 }
+.lflex {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.lflex--wrap {
+  flex-wrap: wrap;
+}
 
 .land8 {
   height: 100vh;
@@ -106,6 +114,11 @@ section {
 .land_owner {
   width: 80%;
 }
+.land_price {
+  min-width: 50px;
+  margin-left: 6px;
+  text-align: right;
+}
 
 .land8_account {
   height: 60px;
@@ -122,8 +135,12 @@ section {
   /*margin-left: 2em;*/
 }
 
+.land_perate {
+  width: 80%;
+  margin: auto;
+}
 .land_button {
-  width: 100px;
+  min-width: 100px;
   color: var(--main-fc);
   background: var(--wave-bk);
   cursor: pointer;
@@ -131,20 +148,37 @@ section {
 .land_button, .land_input, .land_select {
   height: 36px;
   margin: 0 .4em;
-  padding: 0 .4em;
+  padding: 0 1em;
   border-radius: .5em;
   border: none;
   font-size: 1.2em;
 }
 
-.lflex {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+.move_test {
+  text-align: center;
+  border: 1px solid;
+  padding: .8em 1.4em;
+  width: 80%;
+  margin: 3em auto;
+  border-radius: .5em;
 }
-.lflex--wrap {
-  flex-wrap: wrap;
+
+.land_fetch {
+  flex-direction: column;
+  margin-top: 1.5em;
 }
+.land_textarea {
+  height: 260px;
+  width: 60%;
+  border-radius: .5em;
+  font-size: 1.2em;
+  padding: .4em .5em;
+  margin-bottom: .6em;
+}
+.test_fetchnode {
+  flex-direction: column;
+}
+
 .h40 {
   height: 40px;
 }

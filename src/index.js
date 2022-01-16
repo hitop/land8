@@ -1,6 +1,8 @@
 import StarMaskOnboarding from '@starcoin/starmask-onboarding'
 import { providers, utils, bcs, encoding, version as starcoinVersion } from '@starcoin/starcoin'
-import Vue from './vue.min.js';
+import Vue from './vue.min.js'
+
+import { sJson } from './string'
 
 new Vue({
   el: ".land8",
@@ -9,7 +11,7 @@ new Vue({
       {
         owner: '0xf7ea75c717892e5dfce5844ce4271dd6',
         price: 0,
-        message: 'hello land8',
+        message: 'It is a land.',
         bkcolor: '#223567'
       }, { owner: '0x125ffbe331db6fbf49ee0e62f22321a3' }, {}, {}, {}, {}, {}, {}
     ],
@@ -24,6 +26,13 @@ new Vue({
     landchecks: [],
     testtype: 'balances',
     testinput: 0,
+    currentnode: '254',
+    drybody: `{
+  "id":101, 
+  "jsonrpc":"2.0", 
+  "method":"contract.resolve_function", 
+  "params":["0x1::TransferScripts::peer_to_peer_v2"]
+}`,
   },
   computed: {
     isOwner(){
@@ -161,6 +170,17 @@ new Vue({
         console.log(this.testinput, 'transaction info', txn)
         break
       }
+    },
+    dryRun() {
+      fetch(this.nodeUrlMap[this.currentnode] || 'http://localhost:9850', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(sJson(this.drybody)),
+      }).then(res=>res.text()).then(s=>console.log(s)).catch(e=>{
+        console.error(e.message)
+      })
     },
   }
 })
