@@ -4,6 +4,8 @@ a little land trade Dapp game.
 
 一个土地交易小游戏，starcoin 智能合约测试应用。
 
+![](https://raw.githubusercontent.com/hitop/land8/main/webui.png.png)
+
 ## Development/安装
 
 ``` sh

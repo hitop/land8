@@ -1,15 +1,11 @@
 ### Todo
 
-- struct 类型选择
-- land init info
-- land trade
-- public script fun result
-- price auto rise
 - move 合约编写
 - move 编译上传
 
 前端部分
 
+- test function
 - 取消多项选择（保留，只提醒
 - 获取 land 初始化信息
 - 显示当前账户拥有的land
@@ -19,9 +15,16 @@
 
 - Coin public(script)
 - Ldttest
+  - INVALID_MAIN_FUNCTION_SIGNATURE
+  - (acount: &siginer)
 
 ### Done
 
+- struct 类型选择
+- price auto rise
+- public script fun result
+- land init info
+- land trade
 - test 显示返回结果
 - params 输入框数量及placeholder变化（取消
 - coin.move 账号下还是全局
