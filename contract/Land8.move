@@ -31,9 +31,9 @@ module 0x125ffbe331db6fbf49ee0e62f22321a3::Land8 {
     lands: vector<Land>,
   }
 
-  public(script) fun land_list_init(account: &signer) {
+  public(script) fun land_list_init(account: signer) {
     // land8 create
-    assert(Signer::address_of(account) == MY_ADDRESS, 0);
+    assert(Signer::address_of(&account) == MY_ADDRESS, 0);
 
     let lands = Vector::empty<Land>();
     let id: u8 = 1;
@@ -42,29 +42,31 @@ module 0x125ffbe331db6fbf49ee0e62f22321a3::Land8 {
       id = id + 1;
     };
 
-    move_to(account, Land_Lists { lands });
+    move_to(&account, Land_Lists { lands });
   }
 
-  public(script) fun ldt_init(account: &signer) {
-    Token::register_token<LDT>(account, 3);
-    Account::do_accept_token<LDT>(account);
+  public(script) fun ldt_init(account: signer) {
+    Token::register_token<LDT>(&account, 3);
+    Account::do_accept_token<LDT>(&account);
   }
 
-  public(script) fun ldt_mint(account: &signer, amount: u128) {
-    let token = Token::mint<LDT>(account, amount);
-    Account::deposit_to_self<LDT>(account, token)
+  public(script) fun ldt_mint(account: signer, amount: u128) {
+    let token = Token::mint<LDT>(&account, amount);
+    Account::deposit_to_self<LDT>(&account, token)
   }
 
-  public(script) fun land_trade(account: &signer, landid: u64) acquires Land_Lists {
-    let buyer: address = Signer::address_of(account);
+  public(script) fun land_trade(account: signer, landid: u64) acquires Land_Lists {
+    let buyer: address = Signer::address_of(&account);
     let land_list = borrow_global_mut<Land_Lists>(MY_ADDRESS);
     let land  = Vector::borrow(&mut land_list.lands, landid);
 
     let Land { id: _, owner, price, message: _, bkcolor: _ } = land;
-    let buyldt: Token<LDT> = Account::withdraw<LDT>(account, (price as u128));
+    let buyldt: Token<LDT> = Account::withdraw<LDT>(&account, (price as u128));
+    // owner to signer?
     Account::deposit_to_self<LDT>(owner, buyldt);
 
     // 土地所有权转让及价格修改（编译失败，待修改
+    // immut mut 问题
     land.owner: address = buyer;
     land.price: u64 = land.price * 2;
   }

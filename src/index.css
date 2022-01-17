@@ -148,7 +148,7 @@ section {
 .land_button, .land_input, .land_select {
   height: 36px;
   margin: 0 .4em;
-  padding: 0 1em;
+  padding: 0 .4em;
   border-radius: .5em;
   border: none;
   font-size: 1.2em;

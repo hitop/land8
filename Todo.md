@@ -5,11 +5,9 @@
 
 前端部分
 
-- test function
 - 取消多项选择（保留，只提醒
 - 获取 land 初始化信息
 - 显示当前账户拥有的land
-- 显示当前前端对应 链(dev)
 
 编译测试
 
@@ -18,9 +16,12 @@
 - Ldttest
   - INVALID_MAIN_FUNCTION_SIGNATURE
   - (acount: &siginer)
+- Starmask 合约编译？
 
 ### Done
 
+- 合约地址填写
+- 显示当前前端对应 链(dev)
 - struct 类型选择
 - price auto rise
 - public script fun result

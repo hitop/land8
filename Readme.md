@@ -32,3 +32,4 @@ After you get the address of the contract, you could execute it in this test-dap
 ### 贡献参考
 
 - https://github.com/starcoinorg/starmask-test-dapp
+- https://github.com/WestXu/mylegacy
