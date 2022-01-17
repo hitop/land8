@@ -2,11 +2,12 @@ import StarMaskOnboarding from '@starcoin/starmask-onboarding'
 import { providers, utils, bcs, encoding, version as starcoinVersion } from '@starcoin/starcoin'
 import Vue from './vue.min.js'
 
-import { sJson, sString } from './string'
+import { sJson, sString, hexToBuffer } from './string'
 
 new Vue({
   el: ".land8",
   data: {
+    contract_address: '0x125ffbe331db6fbf49ee0e62f22321a3::Land8',
     land8: [
       {
         owner: '0xf7ea75c717892e5dfce5844ce4271dd6',
@@ -50,7 +51,9 @@ new Vue({
     },
     testresultshow(){
       if (typeof this.testresult === 'object') {
-        return JSON.stringify(this.testresult, null, 2)
+        return JSON.stringify(this.testresult, (key, value) =>
+          typeof value === 'bigint' ? value.toString() : value,
+        2)
       }
       return sString(this.testresult)
     },
@@ -102,6 +105,11 @@ new Vue({
         window.starcoin.on('chainChanged', this.handleNewChain)
         window.starcoin.on('networkChanged', this.handleNewNetwork)
       }
+      if (!this.provider) {
+        await this.getNetworkAndChainId()
+      }
+
+      this.landInit()
     },
     async onClickConnect() {
       try {
@@ -147,6 +155,31 @@ new Vue({
         this.landchecks.splice(cidx, 1)
       }
       console.debug('idx', idx, 'landchecks', this.landchecks)
+    },
+    landInit(){
+      if (!this.contract_address) {
+        this.testresult = 'set contract address first'
+        return
+      }
+      this.testresult = 'start to get land init infomation'
+      this.provider.getResources(this.contract_address.split('::')[0]).catch(e=>{
+        this.testresult = e.message || e
+      }).then(res=>{
+        this.testresult = res
+        if (res[this.contract_address + '::Land_Lists']) {
+          this.land8 = res[this.contract_address + '::Land_Lists'].lands.map(land=>{
+            return {
+              ...land,
+              message: this.vecToString(land.message),
+              bkcolor: this.vecToString(land.bkcolor),
+            }
+          })
+          console.log(this.testresult[this.contract_address + '::Land_Lists'].lands)
+        }
+      })
+    },
+    vecToString(vec){
+      return new TextDecoder().decode(hexToBuffer(vec, null))
     },
     async debugTest() {
       if (!this.provider) {
