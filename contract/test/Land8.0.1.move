@@ -13,7 +13,7 @@ module 0x125ffbe331db6fbf49ee0e62f22321a3::Land8 {
   struct Land has store {
     id: u8,
     owner: address,
-    price: u128,
+    price: u64,
     message: vector<u8>,
     bkcolor: vector<u8>,
   }
@@ -55,43 +55,12 @@ module 0x125ffbe331db6fbf49ee0e62f22321a3::Land8 {
     Account::deposit_to_self<LDT>(&account, token)
   }
 
-  public(script) fun land_set_price(account: signer, landid: u8, price: u128) {
-    let land_list = borrow_global_mut<Land_Lists>(MY_ADDRESS);
-    let land = Vector::borrow_mut(&mut land_list.lands, landid);
-    assert(Signer::address_of(&account) == land.owner, 0);
-
-    land.price = price;
-  }
-
-  public(script) fun land_set_bkcolor(account: signer, landid: u8, bkcolor: vector<u8>) {
-    let land_list = borrow_global_mut<Land_Lists>(MY_ADDRESS);
-    let land = Vector::borrow_mut(&mut land_list.lands, landid);
-    assert(Signer::address_of(&account) == land.owner, 0);
-
-    land.bkcolor = bkcolor;
-  }
-
-  public(script) fun land_set_message(account: signer, landid: u8, message: vector<u8>) {
-    let land_list = borrow_global_mut<Land_Lists>(MY_ADDRESS);
-    let land = Vector::borrow_mut(&mut land_list.lands, landid);
-    assert(Signer::address_of(&account) == land.owner, 0);
-
-    land.message = message;
-  }
-
   public(script) fun land_trade(account: signer, landid: u64) acquires Land_Lists {
-    let buyer: address = Signer::address_of(&account);
+    // let buyer: address = Signer::address_of(account);
     let land_list = borrow_global_mut<Land_Lists>(MY_ADDRESS);
-    let land  = Vector::borrow_mut(&mut land_list.lands, landid);
+    let land  = Vector::borrow(&land_list.lands, landid);
 
-    let buyldt: Token::Token<LDT> = Account::withdraw<LDT>(&account, land.price);
-    // buyer LDT to owner
-    // owner to signer?
-    // Account::deposit_to_self<LDT>(owner, buyldt);
+    let buyldt: Token::Token<LDT> = Account::withdraw<LDT>(&account, (land.price as u128));
     Account::deposit_to_self<LDT>(&account, buyldt);
-
-    // land owner and price change
-    land.owner = buyer;
-    land.price = land.price * 2;
   }
 }

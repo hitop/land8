@@ -30,11 +30,11 @@ dev compile examples/my_counter/module/MyCounter.move
 dev compile /elecv2p/efss/move/MyCounter.move
 dev compile /MyCounter.move
 
-dev compile /move/Coin.move -o /move
+dev compile /move/Land8.move -o /move
 
 ### deploy
 
-dev deploy C:\\kFile\\land8\\land8\\contract\\test\\Coin.mv -b
+dev deploy C:\\kFile\\land8\\land8\\contract\\test\\Land8.mv -b
 
 dev deploy /root/.starcoin/cli/dev/tmp/0f47c8b6f193969c262742ef676f66e4/MyCounter.mv -b
 
@@ -60,6 +60,11 @@ account execute-function -s 0x3a8d6bea77f6b98dd32ec8e00114775b --function 0x125f
 #   "reason_code": 101,
 #   "reason_name": "ETOKEN_REGISTER"
 # }
+
+account execute-function --function 0x125ffbe331db6fbf49ee0e62f22321a3::Land8::ldt_init -b
+account execute-function --function 0x125ffbe331db6fbf49ee0e62f22321a3::Land8::land_list_init -b
+account execute-function --function 0x125ffbe331db6fbf49ee0e62f22321a3::Land8::ldt_mint --arg 1200000u128 -b
+account execute-function --function 0x125ffbe331db6fbf49ee0e62f22321a3::Land8::land_set_message --arg 1u64 x"68656c6c6f206c616e64e59295e59295" -b
 
 state get resource 0x125ffbe331db6fbf49ee0e62f22321a3 0x125ffbe331db6fbf49ee0e62f22321a3::MyToken::MyToken
 
