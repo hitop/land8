@@ -40,9 +40,11 @@
     </section>
     <section class="land_tip"></section>
     <section class="land_perate lflex lflex--wrap">
+      <button class="land_button" @click="landInit()">获取最新信息</button>
       <button class="land_button" v-show="!isOwner && landchecks.length">BUY IT</button>
+      <input class="land_input" v-show="isOwner" type="text" v-model="setinput" placeholder="输入要替换的信息">
       <button class="land_button" v-show="isOwner">设置价格</button>
-      <button class="land_button" v-show="isOwner">设置信息</button>
+      <button class="land_button" v-show="isOwner" @click="setMessage()">设置信息</button>
       <button class="land_button" v-show="isOwner">设置背景</button>
     </section>
     <section class="move_test">

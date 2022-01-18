@@ -2,7 +2,7 @@ import StarMaskOnboarding from '@starcoin/starmask-onboarding'
 import { providers, utils, bcs, encoding, version as starcoinVersion } from '@starcoin/starcoin'
 import Vue from './vue.min.js'
 
-import { sJson, sString, hexToBuffer } from './string'
+import { sJson, sString, hexToBuffer, bufferToHex } from './string'
 
 new Vue({
   el: ".land8",
@@ -16,6 +16,7 @@ new Vue({
         bkcolor: '#223567'
       }, { owner: '0x125ffbe331db6fbf49ee0e62f22321a3' }, {}, {}, {}, {}, {}, {}
     ],
+    setinput: '',
     accounts: [],
     nodeUrlMap: {
       '1': 'https://main-seed.starcoin.org',
@@ -154,7 +155,7 @@ new Vue({
       } else {
         this.landchecks.splice(cidx, 1)
       }
-      console.debug('idx', idx, 'landchecks', this.landchecks)
+      console.debug('check land', idx + 1)
     },
     landInit(){
       if (!this.contract_address) {
@@ -166,7 +167,7 @@ new Vue({
         this.testresult = e.message || e
       }).then(res=>{
         this.testresult = res
-        if (res[this.contract_address + '::Land_Lists']) {
+        if (res && res[this.contract_address + '::Land_Lists']) {
           this.land8 = res[this.contract_address + '::Land_Lists'].lands.map(land=>{
             return {
               ...land,
@@ -174,12 +175,47 @@ new Vue({
               bkcolor: this.vecToString(land.bkcolor),
             }
           })
-          console.log(this.testresult[this.contract_address + '::Land_Lists'].lands)
+          console.log('Land init info', this.testresult[this.contract_address + '::Land_Lists'].lands)
         }
       })
     },
     vecToString(vec){
       return new TextDecoder().decode(hexToBuffer(vec, null))
+    },
+    stringTohex(str){
+      return 'x' + bufferToHex(new TextEncoder().encode(str), '')
+    },
+    setMessage() {
+      if (this.landchecks.length !== 1) {
+        alert('暂时仅支持修改单个土地信息')
+        return
+      }
+      if (!this.setinput) {
+        alert('请先输入要替换的信息')
+        return
+      }
+      let message = this.stringTohex(this.setinput)
+      const functionId = this.contract_address + '::land_set_message'
+      // const tyArgs = [this.contract_address + '::LDT']
+      const tyArgs = ['0x00000000000000000000000000000001::STC::STC']
+      const args = [
+        this.accounts[0], // "type_tag": "Address",
+        `${ this.landchecks[0] + 1 }u64`, // "type_tag": "U64",
+        `x\"${ message }\"`, //"type_tag": { "Vector": "U8" }
+      ]
+
+      const starcoinProvider = new providers.Web3Provider(window.starcoin, 'any')
+      starcoinProvider.send('contract.call_v2', [{
+        function_id: functionId,
+        type_args: tyArgs,
+        args,
+      }]).then((result) => {
+        if (result) {
+          this.testresult = result
+        } else {
+          this.testresult = 'fetch failed'
+        }
+      })
     },
     async debugTest() {
       if (!this.provider) {
