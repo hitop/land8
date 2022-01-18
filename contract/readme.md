@@ -14,22 +14,29 @@ struct LDT {}
 
 fun land_list_init();  // 生成 8 块土地
 fun ldt_mint();        // 获取 Token
-fun land_set_message(account: &signer, landid: u64, message: vector<u8>);  // 土地显示信息
-
-account execute-function --function 0x125ffbe331db6fbf49ee0e62f22321a3::Land8::land_set_message --arg 1u64 x"68656c6c6f206c616e64e59295e59295" -b
-
-fun land_set_price(account: &signer, landid: u64, price: u4);  // 设置土地价格
-fun land_set_bkcolor(account: &signer, landid: u64, bkcolor: vector<u8>);  // 设置背景颜色
+fun land_trade(account: signer, landid: u64);      // 购买土地
+fun land_set_price(account: signer, landid: u64, price: u128);  // 设置土地价格
+fun land_set_message(account: signer, landid: u64, message: vector<u8>);  // 土地显示信息
+fun land_set_bkcolor(account: signer, landid: u64, bkcolor: vector<u8>);  // 设置背景颜色
 
 // public signer
 // inner &signer
-
-fun land_trade(account: signer, landid: u64);      // 购买土地
 
 ### 说明
 
 - 8 块土地的信息只存在于合约账号中
 - LDT Token 属于每个账户
+
+### 一些操作
+
+``` sh
+account execute-function --function 0x125ffbe331db6fbf49ee0e62f22321a3::Land8::ldt_init -b
+account execute-function --function 0x125ffbe331db6fbf49ee0e62f22321a3::Land8::land_list_init -b
+account execute-function --function 0x125ffbe331db6fbf49ee0e62f22321a3::Land8::ldt_mint --arg 1200000u128 -b
+account execute-function --function 0x125ffbe331db6fbf49ee0e62f22321a3::Land8::land_set_message --arg 1u64 x"68656c6c6f206c616e64e59295e59295" -b
+
+account transfer -s 0x125ffbe331db6fbf49ee0e62f22321a3 -r 0xF7eA75c717892E5dfce5844cE4271DD6 -v 1000000 -t 0x125ffbe331db6fbf49ee0e62f22321a3::Land8::LDT -b
+```
 
 ### 待添加/完成功能
 

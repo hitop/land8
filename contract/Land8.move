@@ -10,8 +10,8 @@ module 0x125ffbe331db6fbf49ee0e62f22321a3::Land8 {
 
   // errors
   const INSUFFICIENT_BALANCE: u64 = 100003;
-  const CAN_NOT_CHANGE_BY_CURRENT_USER : u64 = 100007;
-  const EXCEED_AMOUNT_LIMIT : u64 = 100008;
+  const CAN_NOT_CHANGE_BY_CURRENT_USER: u64 = 100007;
+  const EXCEED_AMOUNT_LIMIT: u64 = 100008;
 
   // land trade token
   struct LDT has copy, drop, store {}
@@ -108,7 +108,7 @@ module 0x125ffbe331db6fbf49ee0e62f22321a3::Land8 {
 
     // land owner and price change
     land.owner = buyer;
-    // Todo: 涨价算法待优化
+    // Todo: price rise alg better
     land.price = land.price * 2;
   }
 }

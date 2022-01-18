@@ -5,7 +5,7 @@ account default 0x125ffbe331db6fbf49ee0e62f22321a3
 dev get-coin -v 100000STC
 account show 0x125ffbe331db6fbf49ee0e62f22321a3
 account unlock
-account transfer -s 0x125ffbe331db6fbf49ee0e62f22321a3 -r 0xF7eA75c717892E5dfce5844cE4271DD6 -v 100000 -b
+account transfer -s 0x125ffbe331db6fbf49ee0e62f22321a3 -r 0xF7eA75c717892E5dfce5844cE4271DD6 -v 10000000 -b
 
 ### docker
 
@@ -50,7 +50,7 @@ state get resource 0x125ffbe331db6fbf49ee0e62f22321a3 0x125ffbe331db6fbf49ee0e62
 account execute-function --function 0x30695116eaee6e3b45a88ee2b099f75b::MyCounter::init_counter -b
 
 account execute-function --function 0x125ffbe331db6fbf49ee0e62f22321a3::MyToken::mint --arg 123u128 -b
-account transfer -s 0x125ffbe331db6fbf49ee0e62f22321a3 -r 0xF7eA75c717892E5dfce5844cE4271DD6 -v 10 -t 0x125ffbe331db6fbf49ee0e62f22321a3::MyToken::MyToken -b
+account transfer -s 0x125ffbe331db6fbf49ee0e62f22321a3 -r 0xF7eA75c717892E5dfce5844cE4271DD6 -v 10 -t 0x125ffbe331db6fbf49ee0e62f22321a3::Land8::LDT -b
 
 account execute-function -s 0x3a8d6bea77f6b98dd32ec8e00114775b --function 0x125ffbe331db6fbf49ee0e62f22321a3::LdtToken::init -b
 # "abort_code": 25858,
