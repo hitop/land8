@@ -43,9 +43,9 @@
       <button class="land_button" @click="landInit()">获取最新信息</button>
       <button class="land_button" v-show="!isOwner && landchecks.length">BUY IT</button>
       <input class="land_input" v-show="isOwner" type="text" v-model="setinput" placeholder="输入要替换的信息">
-      <button class="land_button" v-show="isOwner">设置价格</button>
-      <button class="land_button" v-show="isOwner" @click="setMessage()">设置信息</button>
-      <button class="land_button" v-show="isOwner">设置背景</button>
+      <button class="land_button" v-show="isOwner" @click="setLandInfo()">设置信息</button>
+      <button class="land_button" v-show="isOwner" @click="setLandInfo('::land_set_bkcolor')">设置背景</button>
+      <button class="land_button" v-show="isOwner" @click="setLandInfo('::land_set_price')">设置价格</button>
     </section>
     <section class="move_test">
       <select class="land_select" v-model="testtype">
@@ -64,6 +64,8 @@
             <option v-for="(idx, node) in nodeUrlMap" :value="node">{{ nodeUrlMap[node] }}</option>
           </select>
           <button class="land_button" @click="dryRun()">DRY.RUN</button>
+          <button class="land_button" @click="testToString()">toString</button>
+          <button class="land_button" @click="testToHex()">toHex</button>
         </div>
       </div>
       <div class="test_result" v-show="testresult">{{ testresultshow }}</div>

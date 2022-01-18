@@ -1,9 +1,5 @@
 ### Todo
 
-- JS SDK 执行任意合约
-- set message
-- set color
-- set price
 - land trade
 - move 编译上传
 
@@ -21,6 +17,10 @@
 
 ### Done
 
+- set price
+- set message
+- set color
+- JS SDK 执行任意合约
 - Land 任意参数修改
 - 取消多项选择（保留，只提醒
 - Land.message 修改
