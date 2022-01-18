@@ -1,5 +1,6 @@
 ### Todo
 
+- JS SDK 执行任意合约
 - set message
 - set color
 - set price
@@ -8,6 +9,7 @@
 
 其他
 
+- Starmask SCRIPT FUNCTION number bug?
 - Coin public(script)
   - BACKWARD_INCOMPATIBLE_MODULE_UPDATE
 - Ldttest

@@ -1,4 +1,5 @@
 import StarMaskOnboarding from '@starcoin/starmask-onboarding'
+import { hexlify } from '@ethersproject/bytes'
 import { providers, utils, bcs, encoding, version as starcoinVersion } from '@starcoin/starcoin'
 import Vue from './vue.min.js'
 
@@ -36,6 +37,8 @@ new Vue({
   "method":"contract.resolve_function", 
   "params":["0x1::TransferScripts::peer_to_peer_v2"]
 }`,
+    provider: null,
+    w3Provider: null, 
   },
   computed: {
     isOwner(){
@@ -64,6 +67,7 @@ new Vue({
   },
   methods: {
     async eInit() {
+      console.log('starcoin JS SDK version', starcoinVersion)
       const { isStarMaskInstalled } = StarMaskOnboarding
       const currentUrl = new URL(window.location.href)
       const forwarderOrigin = currentUrl.hostname === 'localhost'
@@ -105,6 +109,8 @@ new Vue({
         window.starcoin.on('accountsChanged', this.handleNewAccounts)
         window.starcoin.on('chainChanged', this.handleNewChain)
         window.starcoin.on('networkChanged', this.handleNewNetwork)
+
+        this.w3Provider = new providers.Web3Provider(window.starcoin, 'any')
       }
       if (!this.provider) {
         await this.getNetworkAndChainId()
@@ -155,7 +161,7 @@ new Vue({
       } else {
         this.landchecks.splice(cidx, 1)
       }
-      console.debug('check land', idx + 1)
+      console.debug('check land', idx)
     },
     landInit(){
       if (!this.contract_address) {
@@ -183,7 +189,7 @@ new Vue({
       return new TextDecoder().decode(hexToBuffer(vec, null))
     },
     stringTohex(str){
-      return 'x' + bufferToHex(new TextEncoder().encode(str), '')
+      return bufferToHex(new TextEncoder().encode(str), '')
     },
     setMessage() {
       if (this.landchecks.length !== 1) {
@@ -196,25 +202,47 @@ new Vue({
       }
       let message = this.stringTohex(this.setinput)
       const functionId = this.contract_address + '::land_set_message'
-      // const tyArgs = [this.contract_address + '::LDT']
-      const tyArgs = ['0x00000000000000000000000000000001::STC::STC']
-      const args = [
-        this.accounts[0], // "type_tag": "Address",
-        `${ this.landchecks[0] + 1 }u64`, // "type_tag": "U64",
-        `x\"${ message }\"`, //"type_tag": { "Vector": "U8" }
-      ]
-
-      const starcoinProvider = new providers.Web3Provider(window.starcoin, 'any')
-      starcoinProvider.send('contract.call_v2', [{
-        function_id: functionId,
-        type_args: tyArgs,
-        args,
-      }]).then((result) => {
-        if (result) {
-          this.testresult = result
-        } else {
-          this.testresult = 'fetch failed'
-        }
+      // const args = [
+      //   // this.accounts[0], // "type_tag": "Address",
+      //   `${ this.landchecks[0] }u64`, // "type_tag": "U64",
+      //   `x\"${ message }\"`, //"type_tag": { "Vector": "U8" }
+      // ]
+      const args = [`0x000000000000000${this.landchecks[0]}`, `0x${message}`]
+      console.debug('set message', args)
+      this.getPayloadHex(functionId, [], args).then(hex=>{
+        console.debug('getPayloadHex', hex)
+        this.sendTransaction(hex)
+      }).catch(e=>{
+        this.testresult = e.message || e
+        console.error('send message fail', e)
+      })
+    },
+    getPayloadHex(functionId, tyArgs = [], args = [], nodeUrl = this.nodeUrlMap[this.currentnode]) {
+      if (!functionId) {
+        this.testresult = 'functionId is expected'
+        console.error('functionId is expected for payloadInHex')
+        return Promise.reject(this.testresult)
+      }
+      return utils.tx.encodeScriptFunctionByResolve(functionId, tyArgs, args, nodeUrl).then(sf=>{
+        const se = new bcs.BcsSerializer()
+        sf.serialize(se)
+        return hexlify(se.getBytes())
+      })
+    },
+    sendTransaction(payloadInHex) {
+      if (!payloadInHex) {
+        this.testresult = 'payloadInHex is expected'
+        console.error('payloadInHex is expected for payloadInHex')
+        return
+      }
+      this.w3Provider.getSigner().sendUncheckedTransaction({
+        data: payloadInHex
+      }).then(res=>{
+        console.log('send transaction result', res)
+        this.testresult = res
+      }).catch(e=>{
+        this.testresult = e.message || e
+        console.error('send transaction fail', e)
       })
     },
     async debugTest() {
@@ -226,45 +254,44 @@ new Vue({
 
       switch(this.testtype) {
       case 'code':
-        this.provider.getCode(this.testinput).catch(e=>{
-          this.testresult = e.message || e
-        }).then(res=>{
+        this.provider.getCode(this.testinput).then(res=>{
           this.testresult = res
           console.log(this.testinput, 'code', this.testresult)
+        }).catch(e=>{
+          this.testresult = e.message || e
         })
         break
       case 'block':
-        this.provider.getBlock(Number(this.testinput)).catch(e=>{
-          this.testresult = e.message || e
-        }).then(res=>{
+        this.provider.getBlock(Number(this.testinput)).then(res=>{
           this.testresult = res
           console.log(this.testinput, 'block info', this.testresult)
+        }).catch(e=>{
+          this.testresult = e.message || e
         })
         break
       case 'balances':
-        this.provider.getBalances(this.testinput || this.accounts[0]).catch(e=>{
-          this.testresult = e.message || e
-        }).then(res=>{
+        this.provider.getBalances(this.testinput || this.accounts[0]).then(res=>{
           this.testresult = res
-          console.log(this.testresult)
+          console.log(this.testinput, 'balances info', this.testresult)
+        }).catch(e=>{
+          this.testresult = e.message || e
         })
         break
       case 'resources':
-        this.provider.getResources(this.testinput || this.accounts[0]).catch(e=>{
-          this.testresult = e.message || e
-        }).then(res=>{
+        this.provider.getResources(this.testinput || this.accounts[0]).then(res=>{
           this.testresult = res
-          console.log(this.testresult)
+          console.log(this.testinput, 'resources', this.testresult)
+        }).catch(e=>{
+          this.testresult = e.message || e
         })
         break
       case 'transaction':
-        this.provider.getTransaction(this.testinput).catch(e=>{
-          this.testresult = e.message || e
-        }).then(res=>{
+        this.provider.getTransaction(this.testinput).then(res=>{
           this.testresult = res
-          console.log(this.testresult)
+          console.log(this.testinput, 'transaction', this.testresult)
+        }).catch(e=>{
+          this.testresult = e.message || e
         })
-        console.log(this.testinput, 'transaction info', this.testresult)
         break
       }
     },
