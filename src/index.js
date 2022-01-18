@@ -103,9 +103,6 @@ new Vue({
         onboardButton.disabled = false
       }
 
-      const accountButtonsDisabled = !isStarMaskInstalled() || !this.isStarMaskConnected()
-      console.log('is accountButtons Disabled', accountButtonsDisabled)
-
       if (window.starcoin && !this.w3Provider) {
         window.starcoin.on('accountsChanged', this.handleNewAccounts)
         window.starcoin.on('chainChanged', this.handleNewChain)
@@ -142,7 +139,6 @@ new Vue({
       console.debug('new accounts', accounts)
       this.accounts = accounts
       this.eInit()
-      this.ldtBalance()
     },
     async getNetworkAndChainId() {
       try {
@@ -183,6 +179,7 @@ new Vue({
             }
           })
           console.log('Land init info', this.testresult[this.contract_address + '::Land_Lists'].lands)
+          this.ldtBalance()
         }
       })
     },
@@ -197,7 +194,7 @@ new Vue({
       if ('::ldt_mint' === functionId) {
         args.push(Number(this.setinput) || 1000)
       } else if (this.landchecks.length !== 1) {
-        alert('暂时仅支持修改单个土地信息')
+        alert('暂时仅支持对单个土地进行操作')
         return
       } else {
         args.push(this.landchecks[0])
@@ -263,6 +260,10 @@ new Vue({
       })
     },
     ldtBalance(){
+      if (!this.accounts[0]) {
+        console.debug('no accounts yet')
+        return
+      }
       this.provider.getBalances(this.accounts[0]).then(res=>{
         this.testresult = res
         if (res && res[this.contract_address + '::LDT']) {

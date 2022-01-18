@@ -1,11 +1,14 @@
 ### Todo
 
-- move 编译上传
+- Land info auto init
+- LDT token auto register
 - starmask 切换账号执行合约
 - LDT/STC 转换（充值/提现）
+- move 编译上传
 
 其他
 
+- Contract Interaction Pending
 - Event listener confirmation
 - Coin public(script)
   - BACKWARD_INCOMPATIBLE_MODULE_UPDATE
