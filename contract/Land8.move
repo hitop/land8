@@ -56,6 +56,7 @@ module 0x125ffbe331db6fbf49ee0e62f22321a3::Land8 {
   }
 
   public(script) fun ldt_mint(account: signer, amount: u128) {
+    // Todo: Mint limit account/amount
     let token = Token::mint<LDT>(&account, amount);
     Account::deposit_to_self<LDT>(&account, token)
   }
@@ -101,6 +102,7 @@ module 0x125ffbe331db6fbf49ee0e62f22321a3::Land8 {
 
     // land owner and price change
     land.owner = buyer;
+    // Todo: 涨价算法待优化
     land.price = land.price * 2;
   }
 }

@@ -1,5 +1,4 @@
 import StarMaskOnboarding from '@starcoin/starmask-onboarding'
-import BigNumber from 'bignumber.js';
 import { hexlify } from '@ethersproject/bytes'
 import { providers, utils, bcs, encoding, version as starcoinVersion } from '@starcoin/starcoin'
 import Vue from './vue.min.js'
@@ -197,12 +196,15 @@ new Vue({
         alert('暂时仅支持修改单个土地信息')
         return
       }
-      if (!this.setinput) {
-        alert('请先输入要替换的信息')
-        return
+      const args = [this.landchecks[0]]
+      if (!/land_trade/.test(functionId)) {
+        if (!this.setinput) {
+          alert('请先输入要替换的信息')
+          return
+        }
+        args.push(/price/.test(functionId) ? Number(this.setinput) : this.setinput)
       }
       functionId = this.contract_address + functionId
-      const args = [this.landchecks[0], /price/.test(functionId) ? Number(this.setinput) : this.setinput]
       console.debug('functionId', functionId, 'args', args)
       this.getPayloadHex(functionId, [], args).then(hex=>{
         console.debug('getPayloadHex', hex)

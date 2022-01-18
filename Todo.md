@@ -1,11 +1,10 @@
 ### Todo
 
-- land trade
 - move 编译上传
 
 其他
 
-- Starmask SCRIPT FUNCTION number bug?
+- Event listener confirmation
 - Coin public(script)
   - BACKWARD_INCOMPATIBLE_MODULE_UPDATE
 - Ldttest
@@ -17,9 +16,11 @@
 
 ### Done
 
+- land trade
 - set price
 - set message
 - set color
+- Starmask SCRIPT FUNCTION number bug?(否)
 - JS SDK 执行任意合约
 - Land 任意参数修改
 - 取消多项选择（保留，只提醒

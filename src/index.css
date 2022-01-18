@@ -82,6 +82,7 @@ section {
   color: var(--note-bk);
   height: 100%;
   box-sizing: border-box;
+  text-shadow: 0 0 .1em var(--secd-fc);
 }
 .land_bottominfo {
   position: absolute;
