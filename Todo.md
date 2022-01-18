@@ -1,6 +1,10 @@
 ### Todo
 
+- LDT 余额显示
+- LDT mint
 - move 编译上传
+- LDT Token 转送
+- LDT/STC 转换（充值/提现）
 
 其他
 
@@ -16,6 +20,7 @@
 
 ### Done
 
+- 更新信息 button 缩小到右上角
 - land trade
 - set price
 - set message

@@ -45,6 +45,9 @@ section {
   text-align: center;
   color: var(--main-fc);
 }
+.land8_content {
+  position: relative;
+}
 .land8_container {
   list-style: none;
   display: flex;
@@ -82,7 +85,7 @@ section {
   color: var(--note-bk);
   height: 100%;
   box-sizing: border-box;
-  text-shadow: 0 0 .1em var(--secd-fc);
+  text-shadow: 0 0 .06em var(--secd-fc);
 }
 .land_bottominfo {
   position: absolute;
@@ -95,7 +98,24 @@ section {
   box-sizing: border-box;
   opacity: 0;
 }
-.land:hover .land_bottominfo, .land:hover .land_check, .land--checked .land_bottominfo, .land--checked .land_check {
+.land_sync {
+  position: absolute;
+  width: 1em;
+  bottom: .2em;
+  right: 10%;
+  padding: .2em;
+  font-size: 1.2em;
+  border: none;
+  border-radius: .5em;
+  text-align: center;
+  z-index: 2;
+  cursor: pointer;
+  opacity: .4;
+  background-color: var(--wave-bk);
+}
+.land:hover .land_bottominfo, .land:hover .land_check,
+.land--checked .land_bottominfo, .land--checked .land_check,
+.land_sync:hover {
   opacity: 1;
 }
 .land--checked {

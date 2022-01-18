@@ -1,6 +1,6 @@
 import StarMaskOnboarding from '@starcoin/starmask-onboarding'
 import { hexlify } from '@ethersproject/bytes'
-import { providers, utils, bcs, encoding, version as starcoinVersion } from '@starcoin/starcoin'
+import { providers, utils, bcs, version as starcoinVersion } from '@starcoin/starcoin'
 import Vue from './vue.min.js'
 
 import { sJson, sString, hexToBuffer, bufferToHex } from './string'
@@ -38,7 +38,8 @@ new Vue({
   "params":["0x1::TransferScripts::peer_to_peer_v2"]
 }`,
     provider: null,
-    w3Provider: null, 
+    w3Provider: null,
+    ldtamount: 0,
   },
   computed: {
     isOwner(){
@@ -105,7 +106,7 @@ new Vue({
       const accountButtonsDisabled = !isStarMaskInstalled() || !this.isStarMaskConnected()
       console.log('is accountButtons Disabled', accountButtonsDisabled)
 
-      if (window.starcoin) {
+      if (window.starcoin && !this.w3Provider) {
         window.starcoin.on('accountsChanged', this.handleNewAccounts)
         window.starcoin.on('chainChanged', this.handleNewChain)
         window.starcoin.on('networkChanged', this.handleNewNetwork)
@@ -118,15 +119,14 @@ new Vue({
 
       this.landInit()
     },
-    async onClickConnect() {
-      try {
-        const newAccounts = await window.starcoin.request({
-          method: 'stc_requestAccounts',
-        })
+    onClickConnect() {
+      window.starcoin.request({
+        method: 'stc_requestAccounts',
+      }).then(newAccounts=>{
         this.handleNewAccounts(newAccounts)
-      } catch (error) {
+      }).catch(error=>{
         console.error(error)
-      }
+      })
     },
     isStarMaskConnected() {
       return this.accounts && this.accounts.length > 0
@@ -192,18 +192,35 @@ new Vue({
       return bufferToHex(new TextEncoder().encode(str), '')
     },
     setLandInfo(functionId = '::land_set_message') {
-      if (this.landchecks.length !== 1) {
+      const args = []
+      if ('::ldt_mint' === functionId) {
+        args.push(Number(this.setinput) || 1000)
+      } else if (this.landchecks.length !== 1) {
         alert('暂时仅支持修改单个土地信息')
         return
+      } else {
+        args.push(this.landchecks[0])
       }
-      const args = [this.landchecks[0]]
-      if (!/land_trade/.test(functionId)) {
+      switch (functionId) {
+      case '::ldt_mint':
+      case '::land_trade':
+        break
+      case '::land_set_price':
+      case '::land_set_message':
+      case '::land_set_bkcolor':
         if (!this.setinput) {
           alert('请先输入要替换的信息')
           return
         }
-        args.push(/price/.test(functionId) ? Number(this.setinput) : this.setinput)
+        args.push('::land_set_price' === functionId ? Number(this.setinput) : this.setinput)
+        break
+      default:
+        alert(functionId, 'not support yet')
+        return
       }
+      this.signContact(functionId, args)
+    },
+    signContact(functionId, args){
       functionId = this.contract_address + functionId
       console.debug('functionId', functionId, 'args', args)
       this.getPayloadHex(functionId, [], args).then(hex=>{
