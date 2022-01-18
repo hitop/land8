@@ -45,6 +45,9 @@ section {
   text-align: center;
   color: var(--main-fc);
 }
+.land8_contractinfo {
+  width: 100%;
+}
 .land8_content {
   position: relative;
 }

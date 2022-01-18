@@ -39,7 +39,7 @@ new Vue({
 }`,
     provider: null,
     w3Provider: null,
-    ldtamount: 0,
+    ldtamount: '0',
   },
   computed: {
     isOwner(){
@@ -142,6 +142,7 @@ new Vue({
       console.debug('new accounts', accounts)
       this.accounts = accounts
       this.eInit()
+      this.ldtBalance()
     },
     async getNetworkAndChainId() {
       try {
@@ -259,6 +260,17 @@ new Vue({
       }).catch(e=>{
         this.testresult = e.message || e
         console.error('send transaction fail', e)
+      })
+    },
+    ldtBalance(){
+      this.provider.getBalances(this.accounts[0]).then(res=>{
+        this.testresult = res
+        if (res && res[this.contract_address + '::LDT']) {
+          this.ldtamount = String(res[this.contract_address + '::LDT'])
+        }
+        console.log(this.testinput, 'balances info', this.testresult)
+      }).catch(e=>{
+        this.testresult = e.message || e
       })
     },
     async debugTest() {

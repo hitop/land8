@@ -9,6 +9,7 @@ module 0x125ffbe331db6fbf49ee0e62f22321a3::Land8 {
   const LAND_AMOUNT: u64 = 8;
 
   // errors
+  const INSUFFICIENT_BALANCE: u64 = 100003;
   const CAN_NOT_CHANGE_BY_CURRENT_USER : u64 = 100007;
   const EXCEED_AMOUNT_LIMIT : u64 = 100008;
 
@@ -94,9 +95,10 @@ module 0x125ffbe331db6fbf49ee0e62f22321a3::Land8 {
     let land_list = borrow_global_mut<Land_Lists>(MY_ADDRESS);
     let land  = Vector::borrow_mut(&mut land_list.lands, landid);
 
+    let token_balance = Account::balance<LDT>(buyer);
+    assert(token_balance >= land.price, Errors::invalid_argument(INSUFFICIENT_BALANCE));
     let buyldt: Token::Token<LDT> = Account::withdraw<LDT>(&account, land.price);
     // buyer LDT to owner
-    // Account::deposit_to_self<LDT>(owner, buyldt);
     // Account::deposit_to_self<LDT>(&account, buyldt);
     Account::deposit<LDT>(land.owner, buyldt);
 

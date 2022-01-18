@@ -1,9 +1,7 @@
 ### Todo
 
-- LDT 余额显示
-- LDT mint
 - move 编译上传
-- LDT Token 转送
+- starmask 切换账号执行合约
 - LDT/STC 转换（充值/提现）
 
 其他
@@ -20,6 +18,9 @@
 
 ### Done
 
+- LDT 余额显示
+- LDT mint
+- LDT Token 转送（插件默认
 - 更新信息 button 缩小到右上角
 - land trade
 - set price

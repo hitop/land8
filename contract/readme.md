@@ -34,4 +34,5 @@ fun land_trade(account: signer, landid: u64);      // 购买土地
 ### 待添加/完成功能
 
 - 显示信息消耗 token
+- 修改信息消耗 token
 - 土地扩充/种植/收获 token
