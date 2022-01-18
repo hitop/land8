@@ -36,8 +36,8 @@ module 0x125ffbe331db6fbf49ee0e62f22321a3::Land8 {
     assert(Signer::address_of(&account) == MY_ADDRESS, 0);
 
     let lands = Vector::empty<Land>();
-    let id: u8 = 1;
-    while (id <= LAND_AMOUNT) {
+    let id: u8 = 0;
+    while (id < LAND_AMOUNT) {
       Vector::push_back(&mut lands, land_new(id));
       id = id + 1;
     };
