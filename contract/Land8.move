@@ -42,7 +42,7 @@ module 0x125ffbe331db6fbf49ee0e62f22321a3::Land8 {
     assert(Signer::address_of(&account) == MY_ADDRESS, Errors::requires_capability(CAN_NOT_CHANGE_BY_CURRENT_USER));
 
     let lands = Vector::empty<Land>();
-    let id: u8 = 0;
+    let id: u64 = 0;
     while (id < LAND_AMOUNT) {
       Vector::push_back(&mut lands, land_new(id));
       id = id + 1;
@@ -58,11 +58,15 @@ module 0x125ffbe331db6fbf49ee0e62f22321a3::Land8 {
 
   public(script) fun ldt_mint(account: signer, amount: u128) {
     // Todo: Mint limit account/amount
+    let is_accept_token = Account::is_accepts_token<LDT>(Signer::address_of(&account));
+    if (!is_accept_token) {
+      Account::do_accept_token<LDT>(&account);
+    };
     let token = Token::mint<LDT>(&account, amount);
     Account::deposit_to_self<LDT>(&account, token)
   }
 
-  public(script) fun land_set_price(account: signer, landid: u64, price: u128) {
+  public(script) fun land_set_price(account: signer, landid: u64, price: u128) acquires Land_Lists {
     assert(landid < LAND_AMOUNT, Errors::requires_capability(EXCEED_AMOUNT_LIMIT));
     let land_list = borrow_global_mut<Land_Lists>(MY_ADDRESS);
     let land = Vector::borrow_mut(&mut land_list.lands, landid);
@@ -71,7 +75,7 @@ module 0x125ffbe331db6fbf49ee0e62f22321a3::Land8 {
     land.price = price;
   }
 
-  public(script) fun land_set_bkcolor(account: signer, landid: u64, bkcolor: vector<u8>) {
+  public(script) fun land_set_bkcolor(account: signer, landid: u64, bkcolor: vector<u8>) acquires Land_Lists {
     assert(landid < LAND_AMOUNT, Errors::requires_capability(EXCEED_AMOUNT_LIMIT));
     let land_list = borrow_global_mut<Land_Lists>(MY_ADDRESS);
     let land = Vector::borrow_mut(&mut land_list.lands, landid);
@@ -80,7 +84,7 @@ module 0x125ffbe331db6fbf49ee0e62f22321a3::Land8 {
     land.bkcolor = bkcolor;
   }
 
-  public(script) fun land_set_message(account: signer, landid: u64, message: vector<u8>) {
+  public(script) fun land_set_message(account: signer, landid: u64, message: vector<u8>) acquires Land_Lists {
     assert(landid < LAND_AMOUNT, Errors::requires_capability(EXCEED_AMOUNT_LIMIT));
     let land_list = borrow_global_mut<Land_Lists>(MY_ADDRESS);
     let land = Vector::borrow_mut(&mut land_list.lands, landid);
