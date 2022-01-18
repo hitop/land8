@@ -1,28 +1,30 @@
 ### Todo
 
-- move 合约编写
+- set message
+- set color
+- set price
+- land trade
 - move 编译上传
-- 合约返回任意自定义信息（struct
 
-前端部分
+其他
 
-- 取消多项选择（保留，只提醒
-- 显示当前账户拥有的 land
-
-编译测试
-
-- token mint limit account
 - Coin public(script)
   - BACKWARD_INCOMPATIBLE_MODULE_UPDATE
 - Ldttest
   - INVALID_MAIN_FUNCTION_SIGNATURE
   - (acount: &siginer)
+- 合约返回任意自定义信息（struct
 - 合约下线？
 - Starmask 合约编译？
 
 ### Done
 
+- Land 任意参数修改
+- 取消多项选择（保留，只提醒
+- Land.message 修改
 - 获取 land 初始化信息
+- 当前账户拥有的 land
+- token mint limit account
 - 合约地址填写
 - 显示当前前端对应 链(dev)
 - struct 类型选择
